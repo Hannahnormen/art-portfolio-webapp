@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.MAIL_PASS, 
   },
 });
-x
+
 app.post("/api/contact", async (req, res) => {
   const { name, email, phone, message } = req.body;
 
