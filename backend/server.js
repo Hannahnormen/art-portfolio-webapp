@@ -4,7 +4,7 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 x
-app.post("/contact", async (req, res) => {
+app.post("/api/contact", async (req, res) => {
   const { name, email, phone, message } = req.body;
 
   try {

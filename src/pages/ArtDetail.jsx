@@ -4,7 +4,6 @@ import { useParams, Link } from 'react-router-dom';
 function ArtDetail({ artworks }) {
   const { id } = useParams();
 
-  // States för valen
   const [selectedSize, setSelectedSize] = useState("30x40");
   const [quantity, setQuantity] = useState(1);
 
@@ -23,8 +22,7 @@ function ArtDetail({ artworks }) {
   if (!art) {
     return <div style={{ padding: "200px", textAlign: "center" }}>Motivet hittades inte.</div>;
   }
-
-  // Räkna ut totalpriset
+  
   const totalPrice = prices[selectedSize] * quantity;
 
   return (
