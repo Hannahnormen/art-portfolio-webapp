@@ -61,7 +61,9 @@ function Contact() {
           message: "",
         });
       } else {
-        alert("Något gick fel");
+        const errorText = await response.text();
+        console.error("Backend svarade med fel:", errorText);
+        alert("Backend error – kolla console");
       }
     } catch (error) {
       console.error(error);
