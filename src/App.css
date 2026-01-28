@@ -92,7 +92,7 @@ nav a {
   justify-content: center;
 
   
-  background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('public/images/Skärmavbild 2026-01-22 kl. 15.07.22.png');
+  background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url(../dist/images/Background-gradient.png);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -249,7 +249,7 @@ nav a {
 .contact-bg {
   background-image:
     linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
-    url("public/images/Skärmavbild 2026-01-22 kl. 15.07.22.png");
+    url("dist/images/Background-gradient.png");
 
   background-size: cover;
   background-position: center;
