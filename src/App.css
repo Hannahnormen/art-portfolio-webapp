@@ -249,7 +249,7 @@ nav a {
 .contact-bg {
   background-image:
     linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
-    url("dist/images/Background-gradient.png");
+    url("..dist/images/Background-gradient.png");
 
   background-size: cover;
   background-position: center;
