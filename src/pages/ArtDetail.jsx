@@ -28,3 +28,5 @@ app.post("/api/order", async (req, res) => {
     return res.status(500).json({ success: false });
   }
 });
+
+export default Art;
