@@ -34,40 +34,35 @@ function Contact() {
     }
   
     try {
-      const response = await fetch("https://art-portfolio-webapp.onrender.com/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-          message: formData.message.trim(),
-        }),
-      });
-    
-      // Läs response som JSON
-      const data = await response.json();
-    
-      if (response.ok && data.success) {
-        // Lyckad skickning
+      const response = await fetch(
+        "https://art-portfolio-webapp.onrender.com/api/contact",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...formData, message: trimmedMessage }),
+        }
+      );
+  
+      let data;
+      try {
+        data = await response.json();
+      } catch (err) {
+        console.error("JSON parse error:", err);
+      }
+  
+      if (response.ok && data?.success) {
         setSubmitted(true);
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          message: "",
-        });
+        setFormData({ name: "", email: "", phone: "", message: "" });
       } else {
-        console.error("Backend error:", data);
-        alert("Kunde inte skicka meddelandet. Kolla console för detaljer.");
+        console.error("Backend returned error:", data || await response.text());
+        alert(`Kunde inte skicka meddelandet: ${data?.error || "Unknown error"}`);
       }
     } catch (error) {
-      console.error("Serverfel:", error);
+      console.error("Fetch error:", error);
       alert("Serverfel – kolla console");
     } finally {
-      setLoading(false);
+      setLoading(false); // Viktigt: alltid stoppa loading
     }
-    
   };
   
 
