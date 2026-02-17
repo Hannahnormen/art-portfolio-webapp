@@ -15,26 +15,11 @@ function Contact() {
     setSubmitted(false);
   };
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
   
     const trimmedMessage = formData.message.trim();
-    const trimmedName = formData.name.trim();
-    const trimmedEmail = formData.email.trim();
-
-    if (!trimmedName || !trimmedEmail || !trimmedMessage) {
-      alert("Please fill in all required fields.");
-      setLoading(false);
-      return;
-    }
   
     if (trimmedMessage.length < 5) {
       alert("Meddelandet är för kort.");
@@ -47,51 +32,41 @@ function Contact() {
       setLoading(false);
       return;
     }
-
-    console.log("Skickar data till backend:", {
-      name: formData.name.trim(),
-      email: formData.email.trim(),
-      phone: formData.phone.trim(),
-      message: trimmedMessage,
-    });
   
     try {
-      const response = await fetch("https://art-portfolio-webapp.onrender.com/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-          message: trimmedMessage,
-        }),
-      });
-
-      // logga status och text
-      console.log("Response status:", response.status);
-      const responseText = await response.text();
-      console.log("Response text:", responseText);
-        
-      if (response.ok) {
+      const response = await fetch(
+        "https://art-portfolio-webapp.onrender.com/api/contact",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...formData, message: trimmedMessage }),
+        }
+      );
+  
+      let data;
+      try {
+        data = await response.json();
+      } catch (err) {
+        console.error("JSON parse error:", err);
+      }
+  
+      if (response.ok && data?.success) {
         setSubmitted(true);
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          message: "",
-        });
+        setFormData({ name: "", email: "", phone: "", message: "" });
       } else {
-        const errorText = await response.text();
-        console.error("Backend svarade med fel:", errorText);
-        alert("Backend error – kolla console");
+        console.error("Backend returned error:", data || await response.text());
+        alert(`Kunde inte skicka meddelandet: ${data?.error || "Unknown error"}`);
       }
     } catch (error) {
-      console.error(error);
-      alert("Serverfel");
+      console.error("Fetch error:", error);
+      alert("Serverfel – kolla console");
     } finally {
-      setLoading(false);
+      setLoading(false); // Viktigt: alltid stoppa loading
     }
   };
+  
+
+  
   
 
   return (
