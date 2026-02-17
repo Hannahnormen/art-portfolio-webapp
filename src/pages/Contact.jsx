@@ -43,35 +43,33 @@ function Contact() {
     try {
       const response = await fetch("https://art-portfolio-webapp.onrender.com/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
           message: trimmedMessage,
         }),
       });
   
-      if (response.ok) {
+      const data = await response.json();  // <-- Viktigt: läs JSON
+  
+      if (response.ok && data.success) {   // <-- Kolla både status och success
         setSubmitted(true);
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          message: "",
-        });
+        setFormData({ name: "", email: "", phone: "", message: "" });
       } else {
-        const errorText = await response.text();
-        console.error("Backend svarade med fel:", errorText);
-        alert("Backend error – kolla console");
+        console.error("Backend svarade med fel:", data);
+        alert("Could not send message. Check console for details.");
       }
+  
     } catch (error) {
       console.error(error);
       alert("Serverfel");
     } finally {
-      setLoading(false);
+      setLoading(false);  // <-- stoppa loading oavsett
     }
   };
+  
+
+
   
 
   return (
