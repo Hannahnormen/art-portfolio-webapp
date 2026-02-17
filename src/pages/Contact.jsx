@@ -47,6 +47,13 @@ function Contact() {
       setLoading(false);
       return;
     }
+
+    console.log("Skickar data till backend:", {
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      phone: formData.phone.trim(),
+      message: trimmedMessage,
+    });
   
     try {
       const response = await fetch("https://art-portfolio-webapp.onrender.com/api/contact", {
@@ -59,7 +66,12 @@ function Contact() {
           message: trimmedMessage,
         }),
       });
-  
+
+      // logga status och text
+      console.log("Response status:", response.status);
+      const responseText = await response.text();
+      console.log("Response text:", responseText);
+        
       if (response.ok) {
         setSubmitted(true);
         setFormData({
