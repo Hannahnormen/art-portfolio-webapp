@@ -27,6 +27,14 @@ function Contact() {
     setLoading(true);
   
     const trimmedMessage = formData.message.trim();
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedMessage) {
+      alert("Please fill in all required fields.");
+      setLoading(false);
+      return;
+    }
   
     if (trimmedMessage.length < 5) {
       alert("Meddelandet är för kort.");
